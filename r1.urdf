@@ -1,0 +1,112 @@
+<?xml version="1.0"?>
+<robot name="RRP">
+
+	<material name="blue">
+        <color rgba="0 0 0.8 1"/>
+	</material>
+
+	<material name="white">
+        <color rgba="1 1 1 1"/>
+	</material>
+
+	<material name="red">
+        <color rgba="1 0 0 0.8" />
+	</material>
+
+	<material name="green">
+        <color rgba="0 1 0 0.8" />
+	</material>
+
+
+	<link name="base_link">
+        <visual>
+            <geometry>
+                <cylinder length="0.5" radius="1"/>
+            </geometry>
+            <material name="white"/>
+        </visual>
+        <collision>
+            <geometry>
+               <cylinder length="0.5" radius="1"/>
+            </geometry>
+        </collision>
+	</link>
+
+	<link name="rotatable1">
+        <visual>
+            <geometry>
+                <box size="0.4 0.4 4"/>
+            </geometry>
+            <origin xyz="0 0 2"/>
+            <material name="red"/>
+        </visual>
+        <collision>
+            <geometry>
+               <box size="0.4 0.4 4"/>
+            </geometry>
+        </collision>
+	</link>
+
+    <joint name="base_link_to_rotatable_1" type="revolute">
+        <axis xyz="0 1 0"/>
+        <limit effort="1000.0" lower="0.0" upper="1" velocity="0.5"/>
+        <parent link="base_link"/>
+        <child link="rotatable1"/>
+        <origin xyz="0 0 0.25"/>
+	</joint>
+
+    <link name="rotatable2">
+        <visual>
+            <geometry>
+                <box size="4 0.4 0.4"/>
+            </geometry>
+            <origin xyz="2 0 0"/>
+            <material name="green"/>
+         </visual>
+       <collision>
+            <geometry>
+               <box size="4 0.4 0.4"/>
+            </geometry>
+       </collision>
+
+	</link>
+
+	<joint name="rotatable_1_to_rotatable_2" type="revolute">
+        <axis xyz="0 1 0"/>
+        <limit effort="1000.0" lower="0.0" upper="1" velocity="0.5"/>
+        <parent link="rotatable1"/>
+        <child link="rotatable2"/>
+        <origin xyz="0 0 4"/>
+	</joint>
+
+    <link name="prismatic">
+        <visual>
+            <geometry>
+                <box size="2 0.2 0.2"/>
+            </geometry>
+            <origin xyz="1 0 0"/>
+            <material name="blue"/>
+        </visual>
+       <collision>
+            <geometry>
+               <box size="2 0.2 0.2"/>
+            </geometry>
+       </collision>
+	</link>
+
+	<joint name="rotatable_2_to_prismatic" type="prismatic">
+        <parent link="rotatable2"/>
+        <child link="prismatic"/>
+        <limit effort="1000.0" lower="-1" upper="1" velocity="0.5"/>
+        <origin xyz="3 0 0"/>
+	</joint>
+
+	<link name="end_link"/>
+
+	<joint name="prismatic_to_end_link" type="fixed">
+        <parent link="prismatic"/>
+        <child link="end_link"/>
+        <origin xyz="1 0 0"/>
+	</joint>
+    
+</robot>
