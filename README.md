@@ -1,2 +1,2 @@
 # RRP-Robot
-basic RRP robot using Matlab robotics toolbox
+Basic RRP robot using Matlab and robotic toolbox.
